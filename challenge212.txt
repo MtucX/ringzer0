@@ -1,0 +1,4 @@
+"Even Google cannot find this one"... GoogleBot?
+1-	Go to http://ringzer0team.com/robots.txt
+2-	Go to http://ringzer0team.com/16bfff59f7e8343a2643bdc2ee76b2dc/
+and u will get the flag
