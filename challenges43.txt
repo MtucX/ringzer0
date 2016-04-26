@@ -1,0 +1,3 @@
+1 - with burpsuit or live http header .. etc
+2 - there was a field in the header response called Flag, with the value FLAG-....................
+
