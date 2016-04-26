@@ -1,0 +1,3 @@
+1. with burpsuite or http header or edit this cookie ... etc
+2. find the cookie value flag=0, and change it to flag=1
+3. Resubmit the page (Action), and you will see the flag
